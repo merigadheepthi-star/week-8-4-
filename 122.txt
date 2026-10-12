@@ -1,0 +1,66 @@
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    public void start(Stage stage) {
+
+        Label l1 = new Label("Bill Amount:");
+        TextField bill = new TextField();
+        bill.setPromptText("Enter bill amount");
+
+        Label l2 = new Label("Tip Percentage:");
+        TextField tip = new TextField();
+        tip.setPromptText("Enter tip percentage");
+
+        Button btn = new Button("Calculate Tip");
+
+        Label result = new Label();
+
+        btn.setOnAction(e -> {
+            try {
+                double amount = Double.parseDouble(bill.getText());
+                double percent = Double.parseDouble(tip.getText());
+
+                double tipAmount = amount * percent / 100;
+                double total = amount + tipAmount;
+
+                result.setText(
+                    "Tip Amount: " + String.format("%.2f", tipAmount)
+                    + "\nTotal Bill: " + String.format("%.2f", total)
+                );
+            } catch (NumberFormatException ex) {
+                result.setText("Please enter valid numbers!");
+            }
+        });
+
+        VBox root = new VBox(10);
+        root.getChildren().addAll(l1, bill, l2, tip, btn, result);
+        root.setStyle("-fx-padding: 20;");
+
+        Scene scene = new Scene(root, 300, 300);
+
+        stage.setTitle("Tip Calculator");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+Example Output
+Bill Amount: 1000
+
+Tip Percentage: 10
+
+Click Calculate Tip
+
+Result:
+
+text
+Tip Amount: 100.00
+Total Bill: 1100.00
